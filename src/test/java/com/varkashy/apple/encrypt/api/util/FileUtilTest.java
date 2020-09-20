@@ -18,6 +18,11 @@ class FileUtilTest {
     void testReadWriteFeature() throws IOException {
         FileUtil.writeToFile("test".getBytes(),TEST_FILE_PATH);
         assertEquals("test",new String(FileUtil.readFromFile(TEST_FILE_PATH)));
+        try {
+            Files.deleteIfExists(Paths.get(TEST_FILE_PATH));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @org.junit.jupiter.api.Test
@@ -35,12 +40,4 @@ class FileUtilTest {
         }
     }
 
-    @AfterClass
-    public static void cleanUp(){
-        try {
-            Files.deleteIfExists(Paths.get(TEST_FILE_PATH));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 }
