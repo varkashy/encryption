@@ -1,0 +1,71 @@
+{
+	"variables": [],
+	"info": {
+		"name": "Encryption",
+		"_postman_id": "6c98dd67-6d19-6baa-8293-b56546be1f25",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "decrypt",
+			"request": {
+				"url": "localhost:8080/AverageDeviation/decrypt/Lr%2FdlHpN%2FGf53PihpjqgKA%3D%3D",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "7"
+				},
+				"description": "Decryption call to get plain text data"
+			},
+			"response": []
+		},
+		{
+			"name": "pushRecalculateAndEncrypt",
+			"request": {
+				"url": "localhost:8080/AverageDeviation/pushRecalculateEncrypt",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "6"
+				},
+				"description": "Post Call for getting average and standard deviation in encrypted format"
+			},
+			"response": []
+		},
+		{
+			"name": "pushAndRecalculate",
+			"request": {
+				"url": "localhost:8080/AverageDeviation/pushAndRecalculate",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "11"
+				},
+				"description": "Plain text standard deviation and average calculation"
+			},
+			"response": []
+		}
+	]
+}
