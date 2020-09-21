@@ -1,0 +1,38 @@
+The major design call I took was to implement Welford's algorithm
+(https://en.wikipedia.org/wiki/Algorithms_for_calculating_variance#Welford's_online_algorithm). As this allow us to calculate SD and Mean
+in running mode without having to store all the numbers so far observed. This allows to reduce the dependency
+on RAM and also allow us not to worry about maintaining large sum and do lot of summation of square calculation.
+Hope this would be suffice to the requirements around RAM.
+
+The other aspect was to define endpoints as "Rest-like" vs "Rest-ful".
+Considering there is no Resource and we are not actually doing CRUD operations,
+I have defined the endpoints as Rest-Like i.e. using Verbs in the endpoint paths.
+
+I have to make few assumptions around designing this API and also make do with some limitations.
+
+Enclosing and explaining my assumptions/decisions below.
+
+1. The API only supports Integers, I expected that from the given signatures as we are only passing numbers
+
+2. I would have ideally done a Builder Implementation in Production for PlainText call and Encrypted call.
+But with the limited scope we have , keeping a single SimpleMathApi seem fine to me
+
+3. Persisting Secret Key : I would have loved to store this in a backend instead of flat file on disk. For the
+given implementation I have decided to use flat file
+
+4. Binding: I wanted to use dependency injection for SimpleMathApi and CryptoApi objects. However, I struggled with
+Hk2 binding. I tried using Guice and defined a guice module but was getting some errors around Binder object
+not able to understand Guice module. I tried using Abstract Binder as well , but some how that was not working.
+After referring to DropWizard quick start guide I decided to implement it as a composition. Please note, I have
+never worked with DropWizard and HK2 before.
+
+5. Logging: I have not committed any logs. Though I did have those for my debugging. I was in two minds whether
+to push them in or not. Decided to remove them. Please let me know if those are needed and I can do a patch .
+
+6. Exception Handling: I have let resource class handle the exceptions and return status code 500 or 400 depending on
+internal server error or Bad request. The flow is straight forward and most errors are runtime (e.g. encryption
+padding or length of block is off) which I would rather return as 500
+
+7. Salt for Encryption : I have not defined a Salt , thought about it . Ideally , as I understand, Salt should be
+be something specific to the user/object/resource, so that it adds randomness but still remain consistent
+Considering the average will keep changing (same for standard deviation) I decided to keep the flow as is.
